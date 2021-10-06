@@ -25,8 +25,9 @@ function run(max_dimensions_in_px) {
         //Resize image
         resizeImageForWeb(doc, max_dimensions_in_px);
 
-        var nameSplit = sourceImages[i].name.split(".");
-        var path = folderRef + targetFolderRef + nameSplit[0] + '.jpg'
+        var newName = getNewName(sourceImages[i].name);
+        
+        var path = folderRef + targetFolderRef + newName + '.jpg'
         saveJpg(doc, path)
 
         doc.close(SaveOptions.DONOTSAVECHANGES);
@@ -36,6 +37,14 @@ function run(max_dimensions_in_px) {
 
 }
 
+function getNewName(sourceName) {
+    var nameSplit = sourceName.split(".");
+    var ret = nameSplit[0];
+    for (var i = 1; i < nameSplit.length - 1; i++) {
+        ret += "." + nameSplit[i];
+    }
+    return ret;
+}
 
 /*
 This function saves the document as a jpg in a given folder with a given name. It appends the
